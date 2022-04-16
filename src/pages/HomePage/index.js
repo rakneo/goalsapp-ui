@@ -1,3 +1,5 @@
+// eslint-disable-next-line react-hooks/exhaustive-deps
+
 import { useContext, useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useTheme } from '@mui/material/styles';
