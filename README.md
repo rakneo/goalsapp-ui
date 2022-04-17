@@ -22,6 +22,7 @@ This Web UI is based on React.js and uses Context for state management.
 - And Create Goal Action Button when clicked goal form is opened in modal in desktop and as a bottom sliding drawer in mobile.
 
 ![enter image description here](https://i.imgur.com/Edqmdrr.png)
+
 **2. Goal Card**
 
 ![enter image description here](https://i.imgur.com/9OAD0f4.png)
