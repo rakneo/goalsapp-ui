@@ -38,6 +38,7 @@ This Web UI is based on React.js and uses Context for state management.
 *Mobile View*
 
 ![enter image description here](https://i.imgur.com/tfafVK8.png)
+
 *Desktop View*
 
 ![enter image description here](https://i.imgur.com/7vxDnBD.png)
