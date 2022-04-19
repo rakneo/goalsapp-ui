@@ -1,10 +1,10 @@
 # Task 4
 
-## React Based Web UI for Goal Tracker App
+## React Based Web UI for Server App
 
 This Web UI is based on React.js and uses Context for state management.
 
-[Demo Application URL](http://a6a797c3b753247eb8f33f85b1e8f676-1008680595.ap-south-1.elb.amazonaws.com)
+[Demo Application URL](http://a65a14864bc1641baa2898c3d358b82f-2066402120.ap-south-1.elb.amazonaws.com)
 
 | # | Libraries | Version | Summary
 |--|--|--|--|
@@ -19,17 +19,17 @@ This Web UI is based on React.js and uses Context for state management.
 **1. Header**
 
 - Has Logo
-- And Create Goal Action Button when clicked goal form is opened in modal in desktop and as a bottom sliding drawer in mobile.
+- And Create Server Action Button when clicked server form is opened in modal in desktop and as a bottom sliding drawer in mobile.
 
-![enter image description here](https://i.imgur.com/Edqmdrr.png)
+![enter image description here](https://i.imgur.com/SLRubWz.png)
 
-**2. Goal Card**
+**2. Server Card**
 
-![enter image description here](https://i.imgur.com/9OAD0f4.png)
+![enter image description here](https://i.imgur.com/Makl7ia.png)
 
-**3. Goal Form**
+**3. Server Form**
 
-![enter image description here](https://i.imgur.com/lwNTq6A.png)
+![enter image description here](https://i.imgur.com/7CpUsMz.png)
 
 ### Pages
 
@@ -37,10 +37,10 @@ This Web UI is based on React.js and uses Context for state management.
 
 *Mobile View*
 
-![enter image description here](https://i.imgur.com/tfafVK8.png)
+![enter image description here](https://i.imgur.com/pGULlC1.png)
 
 *Desktop View*
 
-![enter image description here](https://i.imgur.com/7vxDnBD.png)
+![enter image description here](https://i.imgur.com/Eu0tQO1.png)
 
 
