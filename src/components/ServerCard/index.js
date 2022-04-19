@@ -7,22 +7,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Chip from '@mui/material/Chip';
 
-export default function GoalCard(props){
+export default function ServerCard(props){
 
-  const { goalId, goalName, description, dueDateTime, onEditClicked, onDeleteClicked } = props;
+  const { serverId, serverName, language, framework, onEditClicked, onDeleteClicked } = props;
 
   return (
     <div>
       <Card>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Goal
+            Server ID: {serverId}
           </Typography>
           <Typography variant="h5" component="div" sx={{ mb: 1.5 }}>
-            {goalName}
+            Name : {serverName}
           </Typography>
           <Typography variant="body2">
-            {description}
+            Language : {language}
           </Typography>
           <Chip
             sx={{
@@ -30,11 +30,9 @@ export default function GoalCard(props){
               fontWeight: 'bold',
               fontSize: '0.75rem',
             }}
-            label={`Due ${dueDateTime ? dueDateTime : 'not provided'}`}
+            label={`Framework : ${framework}`}
             color="primary"
-          >
-
-          </Chip>
+          />
         </CardContent>
         <CardActions
           sx={{
@@ -46,7 +44,7 @@ export default function GoalCard(props){
             variant="contained"
             size="large"
             color="error"
-            onClick={() => onDeleteClicked(goalId)}
+            onClick={() => onDeleteClicked(serverId)}
           >
             <DeleteIcon />
           </IconButton>
@@ -54,7 +52,7 @@ export default function GoalCard(props){
             variant="contained"
             size="large"
             color="default"
-            onClick={() => onEditClicked(goalId)}
+            onClick={() => onEditClicked(serverId)}
           >
             <EditIcon />
           </IconButton>

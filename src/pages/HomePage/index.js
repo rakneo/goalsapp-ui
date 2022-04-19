@@ -10,9 +10,9 @@ import Typography from "@mui/material/Typography";
 import Skeleton from '@mui/material/Skeleton';
 import { BaseStore } from '../../stores/baseStore';
 import Header from '../../components/Header';
-import GoalCard from '../../components/GoalCard';
-import GoalForm from '../../components/GoalForm';
-import {getAllGoals, createGoal, getGoalById, updateGoalById, deleteGoalById} from '../../services/goalService';
+import ServerCard from '../../components/ServerCard';
+import ServerForm from '../../components/ServerForm';
+import {getAllServers, createServer, getServerById, updateServerById, deleteServerById} from "../../services/serverService";
 
 const textStyle = {
   flexGrow: 1,
@@ -28,70 +28,70 @@ export default function HomePage(props) {
 
    const {isModalOpen, openModal, closeModal} = useContext(BaseStore);
 
-   const [goalId, setGoalId] = useState(null);
+   const [serverId, setServerId] = useState(null);
    const [formInitialValues, setFormInitialValues] = useState({
-     goalName: '',
-     description: '',
-     dueDateTime: new Date(),
+     name: '',
+     language: '',
+     framework: '',
    });
    const [isUpdateMode, setIsUpdateMode] = useState(false);
 
    const queryClient = useQueryClient();
 
-   const createGoalMutation = useMutation(createGoal, {
+   const createServerMutation = useMutation(createServer, {
      onSuccess: () => {
        closeModal();
-       queryClient.invalidateQueries('goals');
+       queryClient.invalidateQueries('servers');
      }
    });
 
-   const updateGoalMutation = useMutation(updateGoalById, {
+   const updateServerMutation = useMutation(updateServerById, {
      onSuccess: () => {
-       setGoalId(null);
+       setServerId(null);
        closeModal();
-       queryClient.invalidateQueries('goals');
+       queryClient.invalidateQueries('servers');
      }
    });
 
-   const deleteGoalMutation = useMutation(deleteGoalById, {
+   const deleteServerMutation = useMutation(deleteServerById, {
      onSuccess: () => {
-       setGoalId(null);
+       setServerId(null);
        setIsUpdateMode(false);
        closeModal();
-       queryClient.invalidateQueries('goals');
+       queryClient.invalidateQueries('servers');
      }
    })
 
-   const { data, isFetching , isLoading } = useQuery('goals', getAllGoals);
+   const { data, isFetching , isLoading } = useQuery('servers', getAllServers);
 
-   const getGoalByIdQuery = useQuery(['goalById', goalId], () => getGoalById(goalId), {
+   const getServerByIdQuery = useQuery(['serverById', serverId], () => getServerById(serverId), {
     enabled: false,
    });
 
    const theme = useTheme();
    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-   const onGoalCardEditClicked = (goalId) => {
+   const onServerCardEditClicked = (goalId) => {
      setIsUpdateMode(true);
-     setGoalId(goalId);
+     setServerId(goalId);
    }
 
-   const onGoalCardDeleteClicked = (goalId) => {
-     deleteGoalMutation.mutate(goalId);
+   const onServerCardDeleteClicked = (goalId) => {
+     deleteServerMutation.mutate(goalId);
    }
 
    useEffect(() => {
-     if(goalId && isUpdateMode) {
-       getGoalByIdQuery.refetch().then((result) => {
+     if(serverId && isUpdateMode) {
+       getServerByIdQuery.refetch().then((result) => {
          setFormInitialValues({
-           goalName: result?.data?.data?.goalName || '',
-           description: result?.data?.data?.description || '',
-           dueDateTime: new Date(result?.data?.data?.dueDateTime) || new Date(),
+           name: result?.data?.data?.name || '',
+           language: result?.data?.data?.language || '',
+           framework: new Date(result?.data?.data?.framework) || '',
          });
        });
        openModal();
      }
-   }, [goalId]);
+   }, [serverId]);
 
     return (
       <div>
@@ -105,7 +105,7 @@ export default function HomePage(props) {
           }}
           variant="h6"
         >
-          Welcome to the Goal's App
+          Welcome to the Server App
         </Typography>
         <Grid container spacing={3}>
           {(isLoading || isFetching) ? (
@@ -120,15 +120,15 @@ export default function HomePage(props) {
             </Grid>
 
           ) : (
-            data?.totalItems !== 0 ? data?.data.map((goal) => (
-              <Grid item xs={12} sm={6} md={4} key={goal.id}>
-                <GoalCard
-                  goalId={goal.id}
-                  goalName={goal.goalName}
-                  description={goal.description}
-                  dueDateTime={goal.dueDateTime}
-                  onEditClicked={onGoalCardEditClicked}
-                  onDeleteClicked={onGoalCardDeleteClicked}
+            data?.totalItems !== 0 ? data?.data.map((server) => (
+              <Grid item xs={12} sm={6} md={4} key={server.id}>
+                <ServerCard
+                  serverId={server.id}
+                  serverName={server.name}
+                  language={server.language}
+                  framework={server.framework}
+                  onEditClicked={onServerCardEditClicked}
+                  onDeleteClicked={onServerCardDeleteClicked}
                 />
               </Grid>
             )) :(
@@ -142,25 +142,25 @@ export default function HomePage(props) {
                   }}
                   variant="h6"
                 >
-                  Oops ! You have no goals.
+                  Oops ! You have no servers.
                 </Typography>
               </Grid>
             )
           )}
         </Grid>
         </Box>
-        <GoalForm
+        <ServerForm
           formInitialValues={formInitialValues}
           isUpdateMode={isUpdateMode}
           open={isModalOpen}
           onOpen={openModal}
-          onClose={closeModal}
+          onClose={(resetForm) => {  setIsUpdateMode(false); closeModal(); resetForm();}}
           onSubmit={
             (values, { resetForm }) => {
               if(isUpdateMode) {
-                updateGoalMutation.mutate({goalId, values})
+                updateServerMutation.mutate({serverId, values})
               } else {
-                createGoalMutation.mutate(values);
+                createServerMutation.mutate(values);
               }
               resetForm();
             }

@@ -6,27 +6,23 @@ import Modal from "@mui/material/Modal";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Box from "@mui/material/Box";
 import TextField from '@mui/material/TextField';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 
 const validationSchema = yup.object({
-  goalName: yup
-    .string("Enter your goal name")
-    .required("Goal name is required"),
-  description: yup
-    .string("Enter your goal description"),
-  dueDateTime: yup
-    .date("Enter your goal due date")
-    .min(new Date(), "Goal due date must be in the future")
-    .required("Goal due date is required"),
+  name: yup
+    .string("Enter your server name")
+    .required("Server name is required"),
+  language: yup
+    .string("Enter your server language"),
+  framework: yup
+    .string("Enter your server framework")
+    .required("Goal server is required"),
 })
 
 
-export default function GoalForm(props){
+export default function ServerForm(props){
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -65,7 +61,7 @@ export default function GoalForm(props){
             }}
             variant={'h4'}
           >
-            {isUpdateMode ? 'Modify' : 'Define'} your goal
+            {isUpdateMode ? 'Modify' : 'Define'} your Server
           </Typography>
 
             <TextField
@@ -73,14 +69,14 @@ export default function GoalForm(props){
                 mb: 2,
               }}
               fullWidth
-              id="goalName"
-              label="Goal Name"
-              name="goalName"
-              value={formik.values.goalName}
+              id="name"
+              label="Name"
+              name="name"
+              value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={!!(formik.touched.goalName && formik.errors.goalName)}
-              helperText={formik.touched.goalName && formik.errors.goalName ? formik.errors.goalName : ""}
+              error={!!(formik.touched.name && formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name ? formik.errors.name : ""}
               variant="outlined"
             />
             <TextField
@@ -88,37 +84,31 @@ export default function GoalForm(props){
                 mb: 2,
               }}
               fullWidth
-              id="description"
-              label="Description"
-              name="description"
-              value={formik.values.description}
+              id="language"
+              label="Language"
+              name="language"
+              value={formik.values.language}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={!!(formik.touched.description && formik.errors.description)}
-              helperText={formik.touched.description && formik.errors.description ? formik.errors.description : ""}
+              error={!!(formik.touched.language && formik.errors.language)}
+              helperText={formik.touched.language && formik.errors.language ? formik.errors.language : ""}
               variant="outlined"
             />
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-              <DateTimePicker
-                renderInput={
-                  (props) => <TextField
-                    { ...props }
-                    sx={{
-                      mb: 2,
-                    }}
-                    fullWidth
-
-                  />
-                }
-                label="Due Date and Time"
-                name="dueDateTime"
-                onChange={(date) => {
-                  formik.setFieldValue("dueDateTime", date);
-                }}
-                value={formik.values.dueDateTime}
-
-              />
-            </LocalizationProvider>
+            <TextField
+              sx={{
+                mb: 2,
+              }}
+              fullWidth
+              id="framework"
+              label="Framework"
+              name="framework"
+              value={formik.values.framework}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={!!(formik.touched.framework && formik.errors.framework)}
+              helperText={formik.touched.framework && formik.errors.framework ? formik.errors.framework : ""}
+              variant="outlined"
+            />
         </Box>
         <Box
           sx={{
@@ -138,6 +128,7 @@ export default function GoalForm(props){
             fullWidth
             variant="contained"
             type="submit"
+            onClick={formik.handleSubmit}
             size="large"
             color="success"
           >
@@ -153,7 +144,7 @@ export default function GoalForm(props){
               }}
               variant={'h4'}
             >
-              {isUpdateMode ? 'update' : 'create'} goal
+              {isUpdateMode ? 'update' : 'create'} server
             </Typography>
           </Button>
         </Box>
@@ -165,9 +156,9 @@ export default function GoalForm(props){
   return !isMobile ? (
       <Modal
         open={open}
-        onClose={onClose}
-        aria-labelledby="goalform-modal"
-        aria-describedby="goalform-modal"
+        onClose={() => onClose(formik.resetForm)}
+        aria-labelledby="serverform-modal"
+        aria-describedby="serverform-modal"
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -180,7 +171,7 @@ export default function GoalForm(props){
     <SwipeableDrawer
       anchor="bottom"
       open={open}
-      onClose={onClose}
+      onClose={() => onClose(formik.resetForm)}
       onOpen={onOpen}
       sx={{
         width: '100%',

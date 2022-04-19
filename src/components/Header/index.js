@@ -33,7 +33,7 @@ export default function Header() {
               }
             }
           >
-            Goals App
+            Server App
           </Typography>
           <Button
             variant="contained"
@@ -56,7 +56,7 @@ export default function Header() {
                 }
               }
             >
-              Create Goal
+              Create Server
             </Typography>
           </Button>
         </Toolbar>
