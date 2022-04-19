@@ -24,7 +24,7 @@ const textStyle = {
 };
 
 
-export default function HomePage(props) {
+export default function HomePage() {
 
    const {isModalOpen, openModal, closeModal} = useContext(BaseStore);
 
